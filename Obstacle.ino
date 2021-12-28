@@ -4,19 +4,21 @@ void obstacle()
   int r  = random(10);
   long cm ;
   cm = cal_distance();
+  ///Move Forward
   if (cm > 100)
   {
     move_forward();
   }
+
+  ///Move Forward
   if (cm < 50)
   {
-    stop_moving();
     move_backward();
-    stop_moving();
   }
-  if (cm<50 & cm>30)
-  {
-    stop_moving();
+
+  ///Trun and Move Back
+  if (cm<50 & cm>30)  {
+
     if (r % 2 == 0)
     {
       turn_right();
@@ -27,23 +29,37 @@ void obstacle()
     }
     move_backward();
   }
+  
+  //////Move Back
   if (cm < 30)
   {
-    stop_moving();
     move_backward();
-    stop_moving();
+    cm = cal_distance();
+    if (cm < 30)
+    {
+      stop_moving();
+      if (r % 2 == 0)
+      {
+        turn_right();
+      }
+      else
+      {
+        turn_left();
+      }
+
+    }
   }
+
+  //////Stop
   if (cm < 20)
   {
     stop_moving();
     if (r % 2 == 0)
     {
       turn_right();
-      turn_right();
     }
     else
     {
-      turn_left();
       turn_left();
     }
 

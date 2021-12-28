@@ -6,7 +6,7 @@ int motor3 = 12;
 int motor4 = 11;
 int ENABLEpin_1 = 8;
 int ENABLEpin_2 = 13;
-int mode = LOW;
+int mode = 0;
 int dip1 = A2;
 int dip2 = A3 ;
 int val_recived = 0;
@@ -24,11 +24,11 @@ void setup() {
   pinMode(motor4, OUTPUT); // Digital pin 11 set as output Pin
   pinMode(echoPin, INPUT);
   pinMode(trigPin, OUTPUT);
+  mode = read_dip();
 }
 
 void loop()
-{
-  int mode = read_dip();  
+{    
   if (mode == 1 or mode == 2)
   {
     bluetooth();

@@ -14,7 +14,7 @@ void bluetooth()
   if ( val_recived == 49) // Forward
   {
     cm = cal_distance();
-    if (cm > 100)
+    if (cm >= 100)
     {
       move_forward();
     }
@@ -25,30 +25,32 @@ void bluetooth()
   }
   
   if (val_recived == 50) // Backward
-  {
-    stop_moving();
+  {    
     if (val_recived != current_val)
     {
       current_val = val_recived;
       move_backward();
+      stop_moving();
     }
   }
+  
   else if (val_recived == 52) //Left
-  {
-    stop_moving();
+  {    
     if (val_recived != current_val)
     {
       current_val = val_recived;
       turn_left();
+      stop_moving();
     }
   }
   else if (val_recived == 51) //Right
   {
-    stop_moving();
+    
     if (val_recived != current_val)
     {
       current_val = val_recived;
       turn_right();
+      stop_moving();
     }
   }  
   else

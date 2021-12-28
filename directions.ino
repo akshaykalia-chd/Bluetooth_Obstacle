@@ -4,7 +4,7 @@ void move_forward()
   digitalWrite(motor2, HIGH);//10
   digitalWrite(motor3, LOW);//12
   digitalWrite(motor4, HIGH);//11
-  delay(400);
+  delay(500);
 }
 
 void move_backward()
@@ -13,7 +13,7 @@ void move_backward()
   digitalWrite(motor2, LOW);  //10
   digitalWrite(motor3, HIGH); //12
   digitalWrite(motor4, LOW);  //11
-  delay(400);
+  delay(500);
 }
 
 void stop_moving()
