@@ -9,6 +9,9 @@ int ENABLEpin_2 = 13;
 int mode = LOW;
 int dip1 = A2;
 int dip2 = A3 ;
+int val_recived = 0;
+int current_val = 0;  
+long cm  = 0;
 
 void setup() {
   // put your setup code here, to run once:

@@ -1,13 +1,14 @@
 void bluetooth()
-{
-  int current_val = 0;
-  int val_recived = 0;
-  long cm ;
+{  
   Serial.println("Bluetooth Mode");
   if (Serial.available() > 0)
   {
     val_recived = Serial.read();
     Serial.println(val_recived);
+  }
+  if (val_recived == 56) //Right
+  {
+    obstacle();
   }
 
   if ( val_recived == 49) // Forward
@@ -22,7 +23,8 @@ void bluetooth()
       stop_moving();
     }
   }
-  else if (val_recived == 50) // Backward
+  
+  if (val_recived == 50) // Backward
   {
     stop_moving();
     if (val_recived != current_val)
@@ -48,13 +50,10 @@ void bluetooth()
       current_val = val_recived;
       turn_right();
     }
-  }
-  else if (val_recived == 56) //Right
-  {
-    obstacle();
-  }
+  }  
   else
   {
+    current_val = val_recived;
     stop_moving();
   }
 }
