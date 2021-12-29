@@ -1,53 +1,42 @@
 void obstacle()
 {
   Serial.println("Obstacle Mode");
-  int r  = random(10);
-  long cm ;
-  cm = cal_distance();
+  int r  = random(10);   
   ///Move Forward
-  if (cm > 100)
+  if (cm >= 100)
   {
     move_forward();
+    return;
   }
 
-  ///Move Forward
-  if (cm < 50)
+  ///Move backword
+  if (cm <= 50)
   {
     move_backward();
+    return;
   }
 
-  ///Trun and Move Back
-  if (cm<50 & cm>30)  {
-
+  ///Trun
+  if (cm < 50 & cm > 30) 
+  {
     if (r % 2 == 0)
     {
       turn_right();
+      return;
     }
     else
     {
       turn_left();
-    }
-    move_backward();
+      return;
+    }    
   }
   
-  //////Move Back
+  //////Stop and Move Back
   if (cm < 30)
   {
+    stop_moving();
     move_backward();
-    cm = cal_distance();
-    if (cm < 30)
-    {
-      stop_moving();
-      if (r % 2 == 0)
-      {
-        turn_right();
-      }
-      else
-      {
-        turn_left();
-      }
-
-    }
+    return;    
   }
 
   //////Stop
@@ -57,10 +46,12 @@ void obstacle()
     if (r % 2 == 0)
     {
       turn_right();
+      return;
     }
     else
     {
       turn_left();
+      return;
     }
 
   }

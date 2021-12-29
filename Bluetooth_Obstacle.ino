@@ -10,8 +10,9 @@ int mode = 0;
 int dip1 = A2;
 int dip2 = A3 ;
 int val_recived = 0;
-int current_val = 0;  
+int current_val = 0;
 long cm  = 0;
+bool debug = false;
 
 void setup() {
   // put your setup code here, to run once:
@@ -28,13 +29,44 @@ void setup() {
 }
 
 void loop()
-{    
-  if (mode == 1 or mode == 2)
+{
+  if (mode == 1)
   {
-    bluetooth();
+    while (true)
+    {
+      cm = cal_distance();
+      bluetooth();
+    }
   }
-  else if (mode == 3 or mode == 4)
+  
+  if (mode == 4)
   {
-    obstacle();
+    while (true)
+    {
+      cm = cal_distance();
+      obstacle();
+    }
+  }
+  
+  if (mode == 2)
+  {
+    debug = true;
+    while (true)
+    {
+      Serial.println("Debug");
+      cm = cal_distance();
+      bluetooth();
+    }
+  }
+  
+  if (mode == 3)
+  {
+    debug = true;
+    while (true)
+    {
+      Serial.println("Debug");
+      cm = cal_distance();
+      obstacle();
+    }
   }
 }
