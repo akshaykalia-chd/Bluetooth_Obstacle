@@ -1,3 +1,4 @@
+#include <EEPROM.h>
 int trigPin = 6;      // trig pin of HC-SR04
 int echoPin = 7;     // Echo pin of HC-SR04
 int motor1 = 9;
@@ -13,6 +14,9 @@ int val_recived = 0;
 int current_val = 0;
 long cm  = 0;
 bool debug = false;
+int eprom_val = EEPROM.read(1);
+int step_size = (eprom_val * 10) + 100;
+
 
 void setup() {
   // put your setup code here, to run once:
@@ -25,7 +29,7 @@ void setup() {
   pinMode(motor4, OUTPUT); // Digital pin 11 set as output Pin
   pinMode(echoPin, INPUT);
   pinMode(trigPin, OUTPUT);
-  mode = read_dip();
+  mode = read_dip();    
 }
 
 void loop()

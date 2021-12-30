@@ -14,7 +14,20 @@ void bluetooth()
 
   act = (val_recived != current_val) or input_recived ;
 
-  if (val_recived == 56) // Enable obstacle mode
+  if (val_recived == 55)
+  {
+    current_val = val_recived;
+    stop_moving();
+    return;
+  }
+
+  if (cm < 100 and val_recived == 49)
+  {
+    stop_moving();
+    return;
+  }
+
+  if (val_recived == 53) // Enable obstacle mode
   {
     obstacle();
     return;
@@ -34,15 +47,7 @@ void bluetooth()
     return;
   }
 
-  if (val_recived == 52 and act)//Left
-  {
-    turn_left();
-    stop_moving();
-    current_val = val_recived;
-    return;
-  }
-
-  if (val_recived == 51 and act) //Right
+  if (val_recived == 52 and act) //Right
   {
     turn_right();
     stop_moving();
@@ -50,10 +55,66 @@ void bluetooth()
     return;
   }
 
-  else
+  if (val_recived == 51 and act) //Left
   {
-    current_val = val_recived;
+    turn_left();
     stop_moving();
+    current_val = val_recived;
+    return;
+  }
+
+  if (val_recived == 54 and act) //increment step size
+  {
+    step_size = step_size + 10;
+    eprom_val = eprom_val + 1;
+    Serial.print("New Step Size:");
+    Serial.print(step_size);
+    Serial.println();
+    Serial.print("New eprom_val:");
+    Serial.print(eprom_val);
+    Serial.println();
+    delay(1000);
+    current_val = val_recived;
+    return;
+  }
+
+  if (val_recived == 56 and act)  //decrement step size
+  {
+    if (step_size > 100)
+    {
+      step_size = step_size - 10;
+      eprom_val = eprom_val - 1;
+      Serial.print("New Step Size:");
+      Serial.print(step_size);
+      Serial.println();
+      Serial.print("New eprom_val:");
+      Serial.print(eprom_val);
+      Serial.println();
+      delay(1000);
+    }
+    else
+    {
+      step_size = 100;
+    }
+    current_val = val_recived;
+    return;
+  }
+
+  if (val_recived == 57 and act) //persist step size
+  {
+    if (EEPROM.read(1) != eprom_val)
+    {
+      EEPROM.write(1, eprom_val);
+      Serial.print("New value writen to EEPROM:");
+      Serial.print(eprom_val);
+      Serial.println();
+    }
+    else
+    {
+      Serial.println("Not updating, New Value is same as Existing Value");
+    }
+    current_val = val_recived;
+    delay(5000);
     return;
   }
 }
