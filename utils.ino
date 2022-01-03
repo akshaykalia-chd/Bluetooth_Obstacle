@@ -34,29 +34,3 @@ long cal_displacment()
   }
   return displacment;
 }
-
-void am_i_stuck()
-{
-  if (loop_count != 0)
-  {
-    Serial.println("Checking if I am stuck");
-    stuck = false;
-    long displacment = cal_displacment();
-    Serial.print("Displacment:");
-    Serial.print(displacment);
-    Serial.println();
-    if (displacment < 10 )
-    {
-      stuck = true;
-    }
-    else
-    {
-      Serial.println("Yaa! moving on.");
-      return;
-    }
-  }
-  else
-  {
-    return;
-  }
-}

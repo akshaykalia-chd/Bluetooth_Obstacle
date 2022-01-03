@@ -19,6 +19,8 @@ int eprom_val = EEPROM.read(1);
 int step_size = (eprom_val * 10) + 100;
 int loop_count = 0;
 bool stuck = false;
+long displacment = 0;
+char last_action = 'f';
 
 void setup() {
   // put your setup code here, to run once:
@@ -40,14 +42,7 @@ void loop()
   {
     while (true)
     {
-      loop_count = loop_count + 1;
-      prev_cm = cm;
-      cm = cal_distance();      
-      bluetooth();
-      if (loop_count > 4)
-      {
-        loop_count = 1;
-      }
+      call_action( 'b', false); //bluethooh debug false 
     }
   }
 
@@ -55,48 +50,56 @@ void loop()
   {
     while (true)
     {
-      loop_count = loop_count + 1;
-      prev_cm = cm;
-      cm = cal_distance();      
-      obstacle();
-      if (loop_count > 4)
-      {
-        loop_count = 1;
-      }
+      call_action( 'o', false); //Obstacle debug false      
     }
   }
 
   if (mode == 2)
-  {
-    debug = true;
+  {    
     while (true)
     {
-      loop_count = loop_count + 1;
-      Serial.println("Debug");
-      prev_cm = cm;
-      cm = cal_distance();      
-      bluetooth();
-      if (loop_count > 4)
-      {
-        loop_count = 1;
-      }      
-    }    
+      call_action( 'b', true); //bluethooh debug true 
+    }
   }
 
   if (mode == 3)
-  {
-    debug = true;
+  {   
     while (true)
     {
-      loop_count = loop_count + 1;
-      Serial.println("Debug");
-      prev_cm = cm;
-      cm = cal_distance();      
-      obstacle();
-      if (loop_count > 4)
-      {
-        loop_count = 1;
-      }      
+      call_action( 'o', true); //Obstacle debug true
     }
+  }
+}
+
+
+void call_action( char action, bool _debug)
+{
+  debug = _debug;
+  if (debug)
+  {
+    Serial.println("Debug Mode");
+  }
+  if (action == 'b')
+  {
+    pre_action_tasks();
+    bluetooth();
+  }
+  if (action == 'o')
+  {
+    pre_action_tasks();
+    obstacle();
+  }
+}
+
+void pre_action_tasks()
+{
+  loop_count = loop_count + 1;
+  prev_cm = cm;
+  cm = cal_distance();
+  displacment = displacment + cal_displacment();
+  if (loop_count > 10)
+  {
+    loop_count = 0;
+    displacment = 0;
   }
 }
