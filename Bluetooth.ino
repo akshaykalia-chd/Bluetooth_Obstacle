@@ -72,8 +72,7 @@ void bluetooth()
     Serial.println();
     Serial.print("New eprom_val:");
     Serial.print(eprom_val);
-    Serial.println();
-    delay(1000);
+    Serial.println();    
     current_val = val_recived;
     return;
   }
@@ -89,8 +88,7 @@ void bluetooth()
       Serial.println();
       Serial.print("New eprom_val:");
       Serial.print(eprom_val);
-      Serial.println();
-      delay(1000);
+      Serial.println();      
     }
     else
     {
@@ -113,8 +111,7 @@ void bluetooth()
     {
       Serial.println("Not updating, New Value is same as Existing Value");
     }
-    current_val = val_recived;
-    delay(5000);
+    current_val = val_recived;   
     return;
   }
 }

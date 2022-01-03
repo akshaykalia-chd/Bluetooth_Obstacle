@@ -1,13 +1,20 @@
 void obstacle()
 {
   Serial.println("Obstacle Mode");
-
+  am_i_stuck();
   //////Stop and Move Back
   if (cm < 30 and cm > 20)
   {
-    stop_moving();
-    move_backward();
-    return;
+    if (stuck)
+    {
+      un_stuck(loop_count);
+      return;
+    }
+    else {
+      stop_moving();
+      move_backward();
+      return;
+    }
   }
 
   int r  = random(100);
@@ -15,10 +22,18 @@ void obstacle()
   //////Stop and Turn
   if (cm <= 20)
   {
-    stop_moving();
-    turn(r);
-    return;
+    if (stuck)
+    {
+      un_stuck(loop_count);
+      return;
+    }
+    else {
+      stop_moving();
+      turn(r);
+      return;
+    }
   }
+
 
   ///Turn
   if (cm < 50 and cm > 30)
@@ -33,6 +48,8 @@ void obstacle()
     move_forward();
     return;
   }
+  ///Stuck
+
 
 }
 

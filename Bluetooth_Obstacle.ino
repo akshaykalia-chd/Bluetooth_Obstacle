@@ -13,10 +13,12 @@ int dip2 = A3 ;
 int val_recived = 0;
 int current_val = 0;
 long cm  = 0;
+long prev_cm  = 0;
 bool debug = false;
 int eprom_val = EEPROM.read(1);
 int step_size = (eprom_val * 10) + 100;
-
+int loop_count = 0;
+bool stuck = false;
 
 void setup() {
   // put your setup code here, to run once:
@@ -29,7 +31,7 @@ void setup() {
   pinMode(motor4, OUTPUT); // Digital pin 11 set as output Pin
   pinMode(echoPin, INPUT);
   pinMode(trigPin, OUTPUT);
-  mode = read_dip();    
+  mode = read_dip();
 }
 
 void loop()
@@ -38,39 +40,63 @@ void loop()
   {
     while (true)
     {
-      cm = cal_distance();
+      loop_count = loop_count + 1;
+      prev_cm = cm;
+      cm = cal_distance();      
       bluetooth();
+      if (loop_count > 4)
+      {
+        loop_count = 1;
+      }
     }
   }
-  
+
   if (mode == 4)
   {
     while (true)
     {
-      cm = cal_distance();
+      loop_count = loop_count + 1;
+      prev_cm = cm;
+      cm = cal_distance();      
       obstacle();
+      if (loop_count > 4)
+      {
+        loop_count = 1;
+      }
     }
   }
-  
+
   if (mode == 2)
   {
     debug = true;
     while (true)
     {
+      loop_count = loop_count + 1;
       Serial.println("Debug");
-      cm = cal_distance();
+      prev_cm = cm;
+      cm = cal_distance();      
       bluetooth();
-    }
+      if (loop_count > 4)
+      {
+        loop_count = 1;
+      }      
+    }    
   }
-  
+
   if (mode == 3)
   {
     debug = true;
     while (true)
     {
+      loop_count = loop_count + 1;
       Serial.println("Debug");
-      cm = cal_distance();
+      prev_cm = cm;
+      cm = cal_distance();      
       obstacle();
+      if (loop_count > 4)
+      {
+        loop_count = 1;
+      }      
     }
   }
 }
