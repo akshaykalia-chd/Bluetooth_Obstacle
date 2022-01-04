@@ -86,11 +86,11 @@ void un_stuck(bool debug)
   int count = 10;
   while (count > 0)
   {
+    count = count - 1;
     cm = cal_distance();
     if (cm < 20)
     {
-      move_backward(debug);
-      count = count - 1;
+      move_backward(debug);      
     }
     else
     {
