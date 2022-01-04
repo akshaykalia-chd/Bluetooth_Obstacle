@@ -14,16 +14,13 @@ int val_recived = 0;
 int current_val = 0;
 long cm  = 0;
 long prev_cm  = 0;
-bool debug = false;
 int eprom_val = EEPROM.read(1);
 int step_size = (eprom_val * 10) + 100;
 int loop_count = 0;
-bool stuck = false;
 long displacment = 0;
-char last_action = 'f';
+
 
 void setup() {
-  // put your setup code here, to run once:
   Serial.begin(9600);
   digitalWrite(ENABLEpin_1 , HIGH);
   digitalWrite(ENABLEpin_2 , HIGH);
@@ -38,43 +35,44 @@ void setup() {
 
 void loop()
 {
-  if (mode == 1)
+  int rand_no = 0;
+  if (mode == 1 or mode == 2)
   {
     while (true)
     {
-      call_action( 'b', false); //bluethooh debug false 
+      rand_no = random(100);
+      if (mode == 2)
+      {
+        call_action( 'b', true, rand_no); //bluethooh debug true
+      }
+      else
+      {
+        call_action( 'b', false, rand_no); //bluethooh debug false
+      }
     }
   }
 
-  if (mode == 4)
+  if (mode == 4 or mode == 3)
   {
     while (true)
     {
-      call_action( 'o', false); //Obstacle debug false      
-    }
-  }
-
-  if (mode == 2)
-  {    
-    while (true)
-    {
-      call_action( 'b', true); //bluethooh debug true 
-    }
-  }
-
-  if (mode == 3)
-  {   
-    while (true)
-    {
-      call_action( 'o', true); //Obstacle debug true
+      rand_no = random(100);
+      if (mode == 3)
+      {
+        call_action( 'o', true, rand_no); //Obstacle debug true
+      }
+      else
+      {
+        call_action( 'o', false, rand_no); //Obstacle debug false
+      }
     }
   }
 }
 
 
-void call_action( char action, bool _debug)
+
+void call_action( char action, bool debug, int rand_no)
 {
-  debug = _debug;
   if (debug)
   {
     Serial.println("Debug Mode");
@@ -82,12 +80,12 @@ void call_action( char action, bool _debug)
   if (action == 'b')
   {
     pre_action_tasks();
-    bluetooth();
+    bluetooth(debug, rand_no);
   }
   if (action == 'o')
   {
     pre_action_tasks();
-    obstacle();
+    obstacle(debug, rand_no);
   }
 }
 

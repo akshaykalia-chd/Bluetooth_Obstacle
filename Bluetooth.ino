@@ -1,4 +1,4 @@
-void bluetooth()
+void bluetooth(bool debug, int rand_no)
 {
   Serial.println("Bluetooth Mode");
   bool input_recived = false;
@@ -16,48 +16,48 @@ void bluetooth()
   if (val_recived == 55)
   {
     current_val = val_recived;
-    stop_moving();
+    stop_moving(debug);
     return;
   }
 
   if (cm < 100 and val_recived == 49)
   {
-    stop_moving();
+    stop_moving(debug);
     return;
   }
 
   if (val_recived == 53) // Enable obstacle mode
   {
-    obstacle();
+    obstacle(debug, rand_no);
     return;
   }
 
   if ( val_recived == 49 and cm >= 100)  // Forward
   {
-    move_forward();
+    move_forward(debug);
     return;
   }
 
   if (val_recived == 50 and act) // Backward
   {
-    move_backward();
-    stop_moving();
+    move_backward(debug);
+    stop_moving(debug);
     current_val = val_recived;
     return;
   }
 
   if (val_recived == 52 and act) //Right
   {
-    turn_right();
-    stop_moving();
+    turn_right(debug);
+    stop_moving(debug);
     current_val = val_recived;
     return;
   }
 
   if (val_recived == 51 and act) //Left
   {
-    turn_left();
-    stop_moving();
+    turn_left(debug);
+    stop_moving(debug);
     current_val = val_recived;
     return;
   }
@@ -71,7 +71,11 @@ void bluetooth()
     Serial.println();
     Serial.print("New eprom_val:");
     Serial.print(eprom_val);
-    Serial.println();    
+    Serial.println();
+    if (debug)
+    {
+      delay(2000);
+    }
     current_val = val_recived;
     return;
   }
@@ -87,11 +91,16 @@ void bluetooth()
       Serial.println();
       Serial.print("New eprom_val:");
       Serial.print(eprom_val);
-      Serial.println();      
+      Serial.println();
+      if (debug)
+      {
+        delay(2000);
+      }
     }
     else
     {
       step_size = 100;
+      eprom_val = 0;
     }
     current_val = val_recived;
     return;
@@ -110,7 +119,28 @@ void bluetooth()
     {
       Serial.println("Not updating, New Value is same as Existing Value");
     }
-    current_val = val_recived;   
+    if (debug)
+    {
+      delay(2000);
+    }
+    current_val = val_recived;
+    return;
+  }
+  if (val_recived == 48 and act) //reset stepsize
+  {
+    step_size = 100;
+    eprom_val = 0;
+    Serial.print("New Step Size:");
+    Serial.print(step_size);
+    Serial.println();
+    Serial.print("New eprom_val:");
+    Serial.print(eprom_val);
+    Serial.println();
+    if (debug)
+    {
+      delay(2000);
+    }
+    current_val = val_recived;
     return;
   }
 }

@@ -21,7 +21,7 @@ long cal_distance()
   cm = microsecondsToCentimeters(duration);
   Serial.print("cm:");
   Serial.print(cm);
-  Serial.print("\n");
+  Serial.println();
   return cm;
 }
 
@@ -33,4 +33,22 @@ long cal_displacment()
     displacment = displacment * (-1);
   }
   return displacment;
+}
+
+bool am_i_stuck()
+{
+  if (loop_count == 10)
+  {
+    Serial.println("Checking if I am stuck");
+    long avg_displacment = displacment/11;
+    Serial.print("Average Displacment:");
+    Serial.print(avg_displacment);
+    Serial.println();
+    if (avg_displacment < 20 )
+    {      
+      Serial.println("Oh!,I am stuck.");
+      return true;
+    }
+  }
+return false;
 }

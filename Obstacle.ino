@@ -1,77 +1,57 @@
-void obstacle()
+void obstacle(bool debug, int rand_no)
 {
   Serial.println("Obstacle Mode");
-  // check if stuck
-  am_i_stuck();
+  bool stuck = am_i_stuck();
 
-  // try un stuck actions
   if (stuck)
   {
-    un_stuck();
+    stop_moving(debug);
+    un_stuck(debug);
+    stuck = false;
+    return;
+  } 
+
+  //Stop and Turn
+  if (cm < 20)
+  {
+    stop_moving(debug);
+    turn(rand_no, debug);
     return;
   }
 
   //Stop and Move Back
   if (cm < 30 and cm > 20)
   {
-    stop_moving();
-    move_backward();
-    return;
-  }
-
-  int r  = random(100);
-
-  //Stop and Turn
-  if (cm <= 20)
-  {
-    stop_moving();
-    turn(r);
+    stop_moving(debug);
+    move_backward(debug);
     return;
   }
 
   ///Turn
   if (cm < 50 and cm > 30)
   {
-    turn(r);
+    turn(rand_no, debug);
     return;
   }
 
   ///Move Forward
-  if (cm >= 100)
+  if (cm > 50)
   {
-    move_forward();
+    move_forward(debug);
     return;
   }
 }
 
-void turn(int rand_no)
+void turn(int rand_no, bool debug)
 {
   if (rand_no % 2 == 0)
   {
-    turn_right();
+    turn_right(debug);
     return;
   }
   else
   {
-    turn_left();
+    turn_left(debug);
     return;
   }
-}
-
-void am_i_stuck()
-{
-  if (loop_count == 10)
-  {
-    Serial.println("Checking if I am stuck");
-    long avg_displacment = displacment / 11;
-    Serial.print("Average Displacment:");
-    Serial.print(avg_displacment);
-    Serial.println();
-    if (avg_displacment < 20 )
-    {
-      stuck = true;
-      Serial.println("Oh!,I am stuck.");
-      return;
-    }
-  } 
 }
