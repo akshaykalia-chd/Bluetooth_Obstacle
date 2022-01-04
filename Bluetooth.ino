@@ -1,6 +1,5 @@
 void bluetooth()
 {
-
   Serial.println("Bluetooth Mode");
   bool input_recived = false;
   bool act = false;

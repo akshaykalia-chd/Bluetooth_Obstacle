@@ -70,23 +70,24 @@ void un_stuck()
   int r  = random(100);
   if (last_action == 'f' or last_action == 'b')
   {
-    if (r % 2 == 0 )
-    {
+    if (r % 2 == 0 ) {
       turn_left();
+      return;
     }
     else {
       turn_right();
+      return;
     }
   }
-  if (last_action == 'r' or last_action == 'l' )
+  if (last_action == 'l' or last_action == 'r')
   {
-    if (r % 2 == 0 )
-    {
+    if (r % 2 == 0 ) {
       move_forward();
+      return;
     }
-    else
-    {
+    else {
       move_backward();
+      return;
     }
   }
 }

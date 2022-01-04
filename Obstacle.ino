@@ -67,7 +67,7 @@ void am_i_stuck()
     Serial.print("Average Displacment:");
     Serial.print(avg_displacment);
     Serial.println();
-    if (avg_displacment < 10 )
+    if (avg_displacment < 20 )
     {
       stuck = true;
       Serial.println("Oh!,I am stuck.");
