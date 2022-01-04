@@ -65,7 +65,7 @@ void turn_left(bool debug)
 
 void un_stuck(bool debug)
 {
-  Serial.println("Trying to run un-stuck protocal");  
+  Serial.println("Trying to run un-stuck protocal");
   int r = random(10);
   if (r % 2 == 0)
   {
@@ -83,5 +83,22 @@ void un_stuck(bool debug)
       r = r - 1;
     }
   }
-  return;
+  int count = 10;
+  while (count > 0)
+  {
+    cm = cal_distance();
+    if (cm < 20)
+    {
+      move_backward(debug);
+      count = count - 1;
+    }
+    else
+    {
+      move_forward(debug);
+      turn_right(debug);
+      move_forward(debug);
+      turn_right(debug);
+      return;
+    }
+  }
 }
