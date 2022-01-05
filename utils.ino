@@ -14,11 +14,10 @@ void send_echo()
 }
 
 long cal_distance()
-{
-  long duration, cm;
+{  
   send_echo();
-  duration = pulseIn(echoPin, HIGH);
-  cm = microsecondsToCentimeters(duration);
+  long duration = pulseIn(echoPin, HIGH);
+  long cm = microsecondsToCentimeters(duration);
   Serial.print("cm:");
   Serial.print(cm);
   Serial.println();
@@ -27,7 +26,7 @@ long cal_distance()
 
 long cal_displacment()
 {
-  long displacment = cm  - prev_cm;
+  long displacment = distance  - prev_distance;
   if (displacment < 0)
   {
     displacment = displacment * (-1);
@@ -35,20 +34,25 @@ long cal_displacment()
   return displacment;
 }
 
-bool am_i_stuck()
+bool can_i_move_forward()
 {
-  if (loop_count == 10)
+  bool outcome = false;
+  long cms = cal_distance();
+  if (cms > 70 and cms < 1200)
   {
-    Serial.println("Checking if I am stuck");
-    long avg_displacment = displacment/11;
-    Serial.print("Average Displacment:");
-    Serial.print(avg_displacment);
-    Serial.println();
-    if (avg_displacment < 20 )
-    {      
-      Serial.println("Oh!,I am stuck.");
-      return true;
-    }
+    outcome = true;
   }
-return false;
+  Serial.print("Can i move forward?");
+  if (outcome)
+  {
+    Serial.print(" Yes");
+  }
+
+  else
+  {
+    Serial.print(" No");
+  }
+
+  Serial.println();
+  return outcome;
 }

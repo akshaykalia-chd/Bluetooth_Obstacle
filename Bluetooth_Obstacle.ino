@@ -12,11 +12,10 @@ int dip1 = A2;
 int dip2 = A3 ;
 int val_recived = 0;
 int current_val = 0;
-long cm  = 0;
-long prev_cm  = 0;
+long distance  = 0;
+long prev_distance = 0;
 int eprom_val = EEPROM.read(1);
 int step_size = (eprom_val * 10) + 100;
-int loop_count = 0;
 long displacment = 0;
 
 
@@ -35,19 +34,17 @@ void setup() {
 
 void loop()
 {
-  int rand_no = 0;
   if (mode == 1 or mode == 2)
   {
     while (true)
     {
-      rand_no = random(100);
       if (mode == 2)
       {
-        call_action( 'b', true, rand_no); //bluethooh debug true
+        call_action( 'b', true); //bluethooh debug true
       }
       else
       {
-        call_action( 'b', false, rand_no); //bluethooh debug false
+        call_action( 'b', false); //bluethooh debug false
       }
     }
   }
@@ -56,22 +53,19 @@ void loop()
   {
     while (true)
     {
-      rand_no = random(100);
       if (mode == 3)
       {
-        call_action( 'o', true, rand_no); //Obstacle debug true
+        call_action( 'o', true); //Obstacle debug true
       }
       else
       {
-        call_action( 'o', false, rand_no); //Obstacle debug false
+        call_action( 'o', false); //Obstacle debug false
       }
     }
   }
 }
 
-
-
-void call_action( char action, bool debug, int rand_no)
+void call_action( char action, bool debug)
 {
   if (debug)
   {
@@ -79,25 +73,10 @@ void call_action( char action, bool debug, int rand_no)
   }
   if (action == 'b')
   {
-    pre_action_tasks();
-    bluetooth(debug, rand_no);
+    bluetooth(debug);
   }
   if (action == 'o')
-  {
-    pre_action_tasks();
-    obstacle(debug, rand_no);
-  }
-}
-
-void pre_action_tasks()
-{
-  loop_count = loop_count + 1;
-  prev_cm = cm;
-  cm = cal_distance();
-  displacment = displacment + cal_displacment();
-  if (loop_count > 10)
-  {
-    loop_count = 0;
-    displacment = 0;
+  {    
+    obstacle(debug);
   }
 }

@@ -1,4 +1,4 @@
-void bluetooth(bool debug, int rand_no)
+void bluetooth(bool debug)
 {
   Serial.println("Bluetooth Mode");
   bool input_recived = false;
@@ -20,7 +20,7 @@ void bluetooth(bool debug, int rand_no)
     return;
   }
 
-  if (cm < 100 and val_recived == 49)
+  if (distance < 40 and val_recived == 49)
   {
     stop_moving(debug);
     return;
@@ -28,11 +28,11 @@ void bluetooth(bool debug, int rand_no)
 
   if (val_recived == 53) // Enable obstacle mode
   {
-    obstacle(debug, rand_no);
+    obstacle(debug);
     return;
   }
 
-  if ( val_recived == 49 and cm >= 100)  // Forward
+  if ( val_recived == 49 and distance > 40)  // Forward
   {
     move_forward(debug);
     return;
