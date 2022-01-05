@@ -3,6 +3,7 @@ void bluetooth(bool debug)
   Serial.println("Bluetooth Mode");
   bool input_recived = false;
   bool act = false;
+  distance = cal_distance();
 
   if (Serial.available() > 0)
   {
