@@ -76,7 +76,7 @@ void call_action( char action, bool debug)
     bluetooth(debug);
   }
   if (action == 'o')
-  {    
+  {
     obstacle(debug);
   }
 }

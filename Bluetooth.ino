@@ -17,13 +17,13 @@ void bluetooth(bool debug)
   if (val_recived == 55)
   {
     current_val = val_recived;
-    stop_moving(debug);
+    stop_moving(debug,step_size);
     return;
   }
 
   if (distance < 40 and val_recived == 49)
   {
-    stop_moving(debug);
+    stop_moving(debug,step_size);
     return;
   }
 
@@ -35,30 +35,30 @@ void bluetooth(bool debug)
 
   if ( val_recived == 49 and distance > 40)  // Forward
   {
-    move_forward(debug);
+    move_forward(debug,step_size);
     return;
   }
 
   if (val_recived == 50 and act) // Backward
   {
-    move_backward(debug);
-    stop_moving(debug);
+    move_backward(debug,step_size);
+    stop_moving(debug,step_size);
     current_val = val_recived;
     return;
   }
 
   if (val_recived == 52 and act) //Right
   {
-    turn_right(debug);
-    stop_moving(debug);
+    turn_right(debug,step_size);
+    stop_moving(debug,step_size);
     current_val = val_recived;
     return;
   }
 
   if (val_recived == 51 and act) //Left
   {
-    turn_left(debug);
-    stop_moving(debug);
+    turn_left(debug,step_size);
+    stop_moving(debug,step_size);
     current_val = val_recived;
     return;
   }

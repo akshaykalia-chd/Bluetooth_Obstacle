@@ -1,4 +1,4 @@
-void stop_moving(bool debug)
+void stop_moving(bool debug, int ms_delay)
 {
   if (not debug)
   {
@@ -8,10 +8,10 @@ void stop_moving(bool debug)
     digitalWrite(motor4, LOW);
   }
   Serial.println("Stop");
-  delay(step_size);
+  delay(ms_delay);
 }
 
-void move_forward(bool debug)
+void move_forward(bool debug, int ms_delay)
 {
   if (not debug)
   {
@@ -21,10 +21,10 @@ void move_forward(bool debug)
     digitalWrite(motor4, HIGH);//11
   }
   Serial.println("Forward");
-  delay(step_size);
+  delay(ms_delay);
 }
 
-void move_backward(bool debug)
+void move_backward(bool debug, int ms_delay)
 {
   if (not debug)
   {
@@ -34,10 +34,10 @@ void move_backward(bool debug)
     digitalWrite(motor4, LOW);  //11
   }
   Serial.println("Backward");
-  delay(step_size);
+  delay(ms_delay);
 }
 
-void turn_right(bool debug)
+void turn_right(bool debug, int ms_delay)
 {
   if (not debug)
   {
@@ -47,10 +47,10 @@ void turn_right(bool debug)
     digitalWrite(motor4, LOW);
   }
   Serial.println("Right");
-  delay(step_size);
+  delay(ms_delay);
 }
 
-void turn_left(bool debug)
+void turn_left(bool debug, int ms_delay)
 {
   if (not debug)
   {
@@ -60,5 +60,16 @@ void turn_left(bool debug)
     digitalWrite(motor4, HIGH);
   }
   Serial.println("Left");
-  delay(step_size);
+  delay(ms_delay);
+}
+
+
+void look_left(bool debug)
+{
+  turn_left(debug, 1000);
+}
+
+void look_right(bool debug)
+{
+  turn_right(debug, 1000);
 }

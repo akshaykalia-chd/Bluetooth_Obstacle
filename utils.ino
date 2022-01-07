@@ -56,3 +56,54 @@ bool can_i_move_forward()
   Serial.println();
   return outcome;
 }
+
+
+bool can_i_move_left(bool debug)
+{
+  bool outcome = false;
+  look_left(debug);
+  long cms = cal_distance();
+  if (cms > 70 and cms < 1200)
+  {
+    outcome = true;
+  }
+  Serial.print("Can i move forward on the left?");
+  if (outcome)
+  {
+    Serial.print(" Yes");
+  }
+
+  else
+  {
+    Serial.print(" No");
+  }
+
+  Serial.println();
+  look_right(debug);
+  return outcome;
+}
+
+bool can_i_move_right(bool debug)
+{
+  bool outcome = false;
+  look_right(debug);  
+  long cms = cal_distance();
+  if (cms > 70 and cms < 1200)
+  {
+    outcome = true;
+  }
+  Serial.print("Can i move forward on the left?");
+  if (outcome)
+  {
+    Serial.print(" Yes");
+  }
+
+  else
+  {
+    Serial.print(" No");
+  }
+
+  Serial.println();
+  look_left(debug);
+  return outcome;
+}
