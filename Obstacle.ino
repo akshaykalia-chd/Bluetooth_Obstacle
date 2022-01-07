@@ -1,54 +1,44 @@
 void obstacle(bool debug)
 {
   Serial.println("Obstacle Mode");
-  if (can_i_move_forward())
+  outcome canImoveLeft = {false, 0};
+  outcome canImoveRight = {false, 0};
+  outcome canImoveForward = can_i_move_forward();
+  if (canImoveForward.resp)
   {
     move_forward(debug, step_size);
     return;
   }
   else
   {
-    distance = cal_distance();
-    prev_distance = distance;
-    move_backward(debug, step_size);
-    distance = cal_distance();
-    long displacment = cal_displacment();
-    if (displacment < 0)
+    canImoveLeft = can_i_move_left(debug);
+    look_right(debug);
+    canImoveRight = can_i_move_right(debug);
+    look_left(debug);
+  }
+
+  if (canImoveLeft.resp and canImoveRight.resp)
+  {
+    if (canImoveLeft.dist >= canImoveRight.dist)
     {
-      move_backward(debug, step_size);
-    }
-    if (can_i_move_forward())
-    {
+
+      turn_left(debug, step_size );
       return;
     }
     else
     {
-      turn_left(debug, step_size);
-      turn_left(debug, step_size);
-      if (can_i_move_forward())
-      {
-        return;
-      }
-      else
-      {
-        turn_right(debug, step_size);
-        turn_right(debug, step_size);
-        turn_right(debug, step_size);
-        turn_right(debug, step_size);
-        if (can_i_move_forward())
-        {
-          return;
-        }
-        else
-        {
-          turn_left(debug, step_size);
-          turn_left(debug, step_size);
-          turn_left(debug, step_size);
-          turn_left(debug, step_size);
-          return;
-        }
-
-      }
+      turn_right(debug, step_size);
+      return;
     }
+  }
+  else if (canImoveLeft.resp)
+  {
+    turn_left(debug, step_size );
+    return;
+  }
+  else
+  {
+    turn_right(debug, step_size);
+    return;
   }
 }

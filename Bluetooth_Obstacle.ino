@@ -17,6 +17,10 @@ long prev_distance = 0;
 int eprom_val = EEPROM.read(1);
 int step_size = (eprom_val * 10) + 100;
 long displacment = 0;
+typedef struct {   
+  bool resp;
+  long dist;
+} outcome;
 
 
 void setup() {

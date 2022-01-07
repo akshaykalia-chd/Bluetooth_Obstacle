@@ -1,3 +1,4 @@
+
 long microsecondsToCentimeters(long microseconds) {
   // The speed of sound is 340 m/s or 29 microseconds per centimeter.
   // The ping travels out and back, so to find the distance of the
@@ -14,7 +15,7 @@ void send_echo()
 }
 
 long cal_distance()
-{  
+{
   send_echo();
   long duration = pulseIn(echoPin, HIGH);
   long cm = microsecondsToCentimeters(duration);
@@ -34,16 +35,16 @@ long cal_displacment()
   return displacment;
 }
 
-bool can_i_move_forward()
+outcome can_i_move_forward()
 {
-  bool outcome = false;
+  outcome  forward = {false, 0};
   long cms = cal_distance();
   if (cms > 70 and cms < 1200)
   {
-    outcome = true;
+    forward = {true, cms};
   }
   Serial.print("Can i move forward?");
-  if (outcome)
+  if (forward.resp)
   {
     Serial.print(" Yes");
   }
@@ -54,21 +55,21 @@ bool can_i_move_forward()
   }
 
   Serial.println();
-  return outcome;
+  return forward;
 }
 
 
-bool can_i_move_left(bool debug)
+outcome can_i_move_left(bool debug)
 {
-  bool outcome = false;
+  outcome  left = {false, 0};
   look_left(debug);
   long cms = cal_distance();
-  if (cms > 70 and cms < 1200)
+  if (cms > 50 and cms < 1200)
   {
-    outcome = true;
+    left = {true, cms};
   }
   Serial.print("Can i move forward on the left?");
-  if (outcome)
+  if (left.resp)
   {
     Serial.print(" Yes");
   }
@@ -80,20 +81,20 @@ bool can_i_move_left(bool debug)
 
   Serial.println();
   look_right(debug);
-  return outcome;
+  return left;
 }
 
-bool can_i_move_right(bool debug)
+outcome can_i_move_right(bool debug)
 {
-  bool outcome = false;
-  look_right(debug);  
+  outcome right = {false, 0};
+  look_right(debug);
   long cms = cal_distance();
   if (cms > 70 and cms < 1200)
   {
-    outcome = true;
+    right = {true, cms};
   }
   Serial.print("Can i move forward on the left?");
-  if (outcome)
+  if (right.resp)
   {
     Serial.print(" Yes");
   }
@@ -105,5 +106,5 @@ bool can_i_move_right(bool debug)
 
   Serial.println();
   look_left(debug);
-  return outcome;
+  return right;
 }
