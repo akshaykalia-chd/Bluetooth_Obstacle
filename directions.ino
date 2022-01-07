@@ -66,10 +66,10 @@ void turn_left(bool debug, int ms_delay)
 
 void look_left(bool debug)
 {
-  turn_left(debug, 1000);
+  turn_left(debug, 500);
 }
 
 void look_right(bool debug)
 {
-  turn_right(debug, 1000);
+  turn_right(debug, 500);
 }

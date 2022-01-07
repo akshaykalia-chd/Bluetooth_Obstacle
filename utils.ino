@@ -63,6 +63,7 @@ outcome can_i_move_left(bool debug)
 {
   outcome  left = {false, 0};
   look_left(debug);
+  stop_moving(debug,100);
   long cms = cal_distance();
   if (cms > 50 and cms < 1200)
   {
@@ -81,6 +82,7 @@ outcome can_i_move_left(bool debug)
 
   Serial.println();
   look_right(debug);
+  stop_moving(debug,100);
   return left;
 }
 
@@ -88,6 +90,7 @@ outcome can_i_move_right(bool debug)
 {
   outcome right = {false, 0};
   look_right(debug);
+  stop_moving(debug,100);
   long cms = cal_distance();
   if (cms > 70 and cms < 1200)
   {
@@ -106,5 +109,6 @@ outcome can_i_move_right(bool debug)
 
   Serial.println();
   look_left(debug);
+  stop_moving(debug,100);
   return right;
 }

@@ -11,10 +11,8 @@ void obstacle(bool debug)
   }
   else
   {
-    canImoveLeft = can_i_move_left(debug);
-    look_right(debug);
-    canImoveRight = can_i_move_right(debug);
-    look_left(debug);
+    canImoveLeft = can_i_move_left(debug);       
+    canImoveRight = can_i_move_right(debug);    
   }
 
   if (canImoveLeft.resp and canImoveRight.resp)
