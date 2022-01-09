@@ -1,5 +1,7 @@
 int read_dip()
 {
+  int dip1 = A2;
+  int dip2 = A3 ;
   int sensorValue1 = analogRead(dip1);
   int sensorValue2 = analogRead(dip2);
   bool d01;
@@ -23,23 +25,19 @@ int read_dip()
   }
 
   if (d01 and d02) 
-  {
-    Serial.println("mode: 1");
+  {    
     return 1;
   }
   if (d01 and not d02)
-  {
-    Serial.println("mode: 2");
+  {    
     return 2;
   }
   if (not d01 and d02)
-  {
-    Serial.println("mode: 3");
+  {    
     return 3;
   }
   if (not d01 and not d02)
-  {
-    Serial.println("mode: 4");
+  {    
     return 4;
   }
 }

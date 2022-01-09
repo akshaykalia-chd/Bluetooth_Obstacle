@@ -1,9 +1,8 @@
 void bluetooth(bool debug)
-{
-  Serial.println("Bluetooth Mode");
+{ 
   bool input_recived = false;
   bool act = false;
-  distance = cal_distance();
+  long distance = cal_distance();
 
   if (Serial.available() > 0)
   {
@@ -17,13 +16,13 @@ void bluetooth(bool debug)
   if (val_recived == 55)
   {
     current_val = val_recived;
-    stop_moving(debug,step_size);
+    stop_moving(step_size);
     return;
   }
 
-  if (distance < 40 and val_recived == 49)
+  if ((distance < 25 or distance > 1200) and val_recived == 49)
   {
-    stop_moving(debug,step_size);
+    stop_moving(step_size);
     return;
   }
 
@@ -33,32 +32,32 @@ void bluetooth(bool debug)
     return;
   }
 
-  if ( val_recived == 49 and distance > 40)  // Forward
+  if ( val_recived == 49 and (distance > 25 and distance < 1200))  // Forward
   {
-    move_forward(debug,step_size);
+    move_forward(step_size);
     return;
   }
 
   if (val_recived == 50 and act) // Backward
   {
-    move_backward(debug,step_size);
-    stop_moving(debug,step_size);
+    move_backward(step_size);
+    stop_moving(step_size);
     current_val = val_recived;
     return;
   }
 
   if (val_recived == 52 and act) //Right
   {
-    turn_right(debug,step_size);
-    stop_moving(debug,step_size);
+    turn_right(step_size);
+    stop_moving(step_size);
     current_val = val_recived;
     return;
   }
 
   if (val_recived == 51 and act) //Left
   {
-    turn_left(debug,step_size);
-    stop_moving(debug,step_size);
+    turn_left(step_size);
+    stop_moving(step_size);
     current_val = val_recived;
     return;
   }

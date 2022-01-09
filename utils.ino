@@ -19,29 +19,19 @@ long cal_distance()
   send_echo();
   long duration = pulseIn(echoPin, HIGH);
   long cm = microsecondsToCentimeters(duration);
-  Serial.print("cm:");
-  Serial.print(cm);
-  Serial.println();
+//  Serial.print("cm:");
+//  Serial.print(cm);
+//  Serial.println();
   return cm;
-}
-
-long cal_displacment()
-{
-  long displacment = distance  - prev_distance;
-  if (displacment < 0)
-  {
-    displacment = displacment * (-1);
-  }
-  return displacment;
 }
 
 outcome can_i_move_forward()
 {
-  outcome  forward = {false, 0};
-  long cms = cal_distance();
-  if (cms > 70 and cms < 1200)
+  long distance = cal_distance();
+  outcome  forward = {false, distance};
+  if (distance > 50 and distance < 1200)
   {
-    forward = {true, cms};
+    forward = {true, distance};
   }
   Serial.print("Can i move forward?");
   if (forward.resp)
@@ -59,15 +49,17 @@ outcome can_i_move_forward()
 }
 
 
-outcome can_i_move_left(bool debug)
+outcome can_i_move_left()
 {
-  outcome  left = {false, 0};
-  look_left(debug);
-  stop_moving(debug,100);
-  long cms = cal_distance();
-  if (cms > 50 and cms < 1200)
+  look_left();
+  stop_moving(100);
+  long distance = cal_distance();
+  outcome  left = {false, distance};
+  look_right();
+  stop_moving(100);
+  if (distance > 50 and distance < 1200)
   {
-    left = {true, cms};
+    left = {true, distance};
   }
   Serial.print("Can i move forward on the left?");
   if (left.resp)
@@ -81,22 +73,22 @@ outcome can_i_move_left(bool debug)
   }
 
   Serial.println();
-  look_right(debug);
-  stop_moving(debug,100);
   return left;
 }
 
-outcome can_i_move_right(bool debug)
+outcome can_i_move_right()
 {
-  outcome right = {false, 0};
-  look_right(debug);
-  stop_moving(debug,100);
-  long cms = cal_distance();
-  if (cms > 70 and cms < 1200)
+  look_right();
+  stop_moving(100);  
+  long distance = cal_distance();
+  outcome right = {false, distance};
+  look_left();
+  stop_moving(100);
+  if (distance > 50 and distance < 1200)
   {
-    right = {true, cms};
+    right = {true, distance};
   }
-  Serial.print("Can i move forward on the left?");
+  Serial.print("Can i move forward on the right?");
   if (right.resp)
   {
     Serial.print(" Yes");
@@ -108,7 +100,5 @@ outcome can_i_move_right(bool debug)
   }
 
   Serial.println();
-  look_left(debug);
-  stop_moving(debug,100);
   return right;
 }
