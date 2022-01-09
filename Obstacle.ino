@@ -1,4 +1,4 @@
-void obstacle(bool debug)
+void obstacle()
 {  
   loop_count += 1;  
   outcome canImoveForward = can_i_move_forward();

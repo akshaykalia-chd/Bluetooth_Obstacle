@@ -1,4 +1,4 @@
-int read_dip()
+char read_dip()
 {
   int dip1 = A2;
   int dip2 = A3 ;
@@ -26,18 +26,18 @@ int read_dip()
 
   if (d01 and d02) 
   {    
-    return 1;
+    return '1';
   }
   if (d01 and not d02)
   {    
-    return 2;
+    return '2';
   }
   if (not d01 and d02)
   {    
-    return 3;
+    return '3';
   }
   if (not d01 and not d02)
   {    
-    return 4;
+    return '4';
   }
 }

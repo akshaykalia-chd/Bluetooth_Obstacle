@@ -1,4 +1,4 @@
-void bluetooth(bool debug)
+void bluetooth()
 { 
   bool input_recived = false;
   bool act = false;
@@ -28,7 +28,7 @@ void bluetooth(bool debug)
 
   if (val_recived == 53) // Enable obstacle mode
   {
-    obstacle(debug);
+    obstacle();
     return;
   }
 
@@ -71,11 +71,7 @@ void bluetooth(bool debug)
     Serial.println();
     Serial.print("New eprom_val:");
     Serial.print(eprom_val);
-    Serial.println();
-    if (debug)
-    {
-      delay(2000);
-    }
+    Serial.println();    
     current_val = val_recived;
     return;
   }
@@ -91,11 +87,7 @@ void bluetooth(bool debug)
       Serial.println();
       Serial.print("New eprom_val:");
       Serial.print(eprom_val);
-      Serial.println();
-      if (debug)
-      {
-        delay(2000);
-      }
+      Serial.println();      
     }
     else
     {
@@ -118,11 +110,7 @@ void bluetooth(bool debug)
     else
     {
       Serial.println("Not updating, New Value is same as Existing Value");
-    }
-    if (debug)
-    {
-      delay(2000);
-    }
+    }    
     current_val = val_recived;
     return;
   }
@@ -135,11 +123,7 @@ void bluetooth(bool debug)
     Serial.println();
     Serial.print("New eprom_val:");
     Serial.print(eprom_val);
-    Serial.println();
-    if (debug)
-    {
-      delay(2000);
-    }
+    Serial.println();    
     current_val = val_recived;
     return;
   }

@@ -19,70 +19,64 @@ typedef struct {
 } outcome;
 
 
-void setup() {
-  Serial.begin(9600);  
+void setup()
+{
+  Serial.begin(9600);
   pinMode(motor1, OUTPUT); // Digital pin 9 set as output Pin
   pinMode(motor2, OUTPUT); // Digital pin 10 set as output Pin
   pinMode(motor3, OUTPUT); // Digital pin 12 set as output Pin
   pinMode(motor4, OUTPUT); // Digital pin 11 set as output Pin
   pinMode(echoPin, INPUT);
   pinMode(trigPin, OUTPUT);
-  
 }
 
 void loop()
 {
-  int mode = 0;
-  mode = read_dip();
-  digitalWrite(ENABLEpin_1 , HIGH);
-  digitalWrite(ENABLEpin_2 , HIGH);  
-  if (mode == 1 or mode == 2)
+  char mode = read_dip();
+  if (mode == '1' or mode == '4')
   {
-    while (true)
+    digitalWrite(ENABLEpin_1 , HIGH);
+    digitalWrite(ENABLEpin_2 , HIGH);
+    Serial.println("Normal Mode, Motors enabled");
+    if (mode == 1)
     {
-      if (mode == 2)
+      Serial.println("Obstacle Mode");
+      while (true)
       {
-        call_action( 'b', true); //bluethooh debug true
-      }
-      else
-      {
-        call_action( 'b', false); //bluethooh debug false
+        obstacle();
       }
     }
-  }
-
-  if (mode == 4 or mode == 3)
-  {
-    while (true)
+    else
     {
-      if (mode == 3)
+      Serial.println("Bluetooth Mode");
+      while (true)
       {
-        call_action( 'o', true); //Obstacle debug true
-      }
-      else
-      {
-        call_action( 'o', false); //Obstacle debug false
+        bluetooth();
       }
     }
-  }
-}
 
-void call_action( char action, bool debug)
-{
-  if (debug)
+  }
+
+  if (mode == '2' or mode == '3')
   {
-    Serial.println("Debug Mode, Disabling Motors");
     digitalWrite(ENABLEpin_1 , LOW);
     digitalWrite(ENABLEpin_2 , LOW);
-  }
-  if (action == 'b')
-  {
-    Serial.println("Bluetooth Mode");
-    bluetooth(debug);
-  }
-  if (action == 'o')
-  {
-    Serial.println("Obstacle Mode");
-    obstacle(debug);
+    Serial.println("Debug Mode, Motors disabled");
+    if (mode == 2)
+    {
+      Serial.println("Bluetooth Mode");
+      while (true)
+      {
+        bluetooth();
+      }
+    }
+    else
+    {
+      Serial.println("Obstacle Mode");
+      while (true)
+      {
+        obstacle();
+      }
+    }
   }
 }
