@@ -24,16 +24,16 @@ char read_dip()
     d02 = false;
   }
 
-  if (d01 and d02) 
+  if (d01 and d02)
   {    
     return '1';
   }
   if (d01 and not d02)
-  {    
+  {   
     return '2';
   }
   if (not d01 and d02)
-  {    
+  {   
     return '3';
   }
   if (not d01 and not d02)

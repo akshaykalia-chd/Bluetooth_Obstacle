@@ -1,4 +1,4 @@
-void bluetooth()
+void bluetooth(bool debug)
 { 
   bool input_recived = false;
   bool act = false;
@@ -16,48 +16,49 @@ void bluetooth()
   if (val_recived == 55)
   {
     current_val = val_recived;
-    stop_moving(step_size);
+    stop_moving(step_size, debug);
     return;
   }
 
   if ((distance < 25 or distance > 1200) and val_recived == 49)
   {
-    stop_moving(step_size);
+    stop_moving(step_size, debug);
     return;
   }
 
   if (val_recived == 53) // Enable obstacle mode
   {
-    obstacle();
+    Serial.println("Mode: Obstacle");
+    obstacle(debug);
     return;
   }
 
   if ( val_recived == 49 and (distance > 25 and distance < 1200))  // Forward
   {
-    move_forward(step_size);
+    move_forward(step_size, debug);
     return;
   }
 
   if (val_recived == 50 and act) // Backward
   {
-    move_backward(step_size);
-    stop_moving(step_size);
+    move_backward(step_size, debug);
+    stop_moving(step_size, debug);
     current_val = val_recived;
     return;
   }
 
   if (val_recived == 52 and act) //Right
   {
-    turn_right(step_size);
-    stop_moving(step_size);
+    turn_right(step_size, debug);
+    stop_moving(step_size, debug);
     current_val = val_recived;
     return;
   }
 
   if (val_recived == 51 and act) //Left
   {
-    turn_left(step_size);
-    stop_moving(step_size);
+    turn_left(step_size, debug);
+    stop_moving(step_size, debug);
     current_val = val_recived;
     return;
   }

@@ -33,25 +33,31 @@ void setup()
 void loop()
 {
   char mode = read_dip();
+  Serial.print("Step Size:");
+  Serial.print(step_size);
+  Serial.println();
+  Serial.print("Mode:");
+  Serial.print(mode);
+  Serial.println();
   if (mode == '1' or mode == '4')
   {
     digitalWrite(ENABLEpin_1 , HIGH);
     digitalWrite(ENABLEpin_2 , HIGH);
-    Serial.println("Normal Mode, Motors enabled");
-    if (mode == 1)
+    Serial.println("Debug false, Motors enabled");
+    if (mode == '1')
     {
-      Serial.println("Obstacle Mode");
+      Serial.println("Mode:Obstacle");
       while (true)
       {
-        obstacle();
+        obstacle(false);
       }
     }
     else
     {
-      Serial.println("Bluetooth Mode");
+      Serial.println("Mode:Bluetooth ");
       while (true)
       {
-        bluetooth();
+        bluetooth(false);
       }
     }
 
@@ -61,21 +67,21 @@ void loop()
   {
     digitalWrite(ENABLEpin_1 , LOW);
     digitalWrite(ENABLEpin_2 , LOW);
-    Serial.println("Debug Mode, Motors disabled");
-    if (mode == 2)
+    Serial.println("Debug true, Motors disabled");
+    if (mode == '2')
     {
-      Serial.println("Bluetooth Mode");
+      Serial.println("Mode:Bluetooth");
       while (true)
       {
-        bluetooth();
+        bluetooth(true);
       }
     }
     else
     {
-      Serial.println("Obstacle Mode");
+      Serial.println("Mode:Obstacle");
       while (true)
       {
-        obstacle();
+        obstacle(true);
       }
     }
   }
