@@ -20,11 +20,11 @@ Obstacle ::Obstacle(bool debug, int step_size, int step_size_look, int stop_dist
   canImoveLeft = {false, 0};
   canImoveRight = {false, 0};
   count_call_un_stuck = 0;
-  motor_state = disable_motors();  
+  motor_state = "NA";  
 }
 
 void Obstacle ::start_moving()
-{
+{  
   canimove._stop_distance = _stop_distance;
   loop_count += 1;
   canImoveForward = canimove.can_i_move_forward();
@@ -221,7 +221,8 @@ void Obstacle::un_stuck()
   }
 }
 
-String Obstacle::disable_motors()
-{
-  return move.disable_motors(_debug);
+void Obstacle::set_debug()
+{  
+  motor_state = move.disable_motors(_debug);
 }
+
