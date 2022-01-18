@@ -1,32 +1,15 @@
-#include "Obstacle.h"
+#include "Bot.h"
 
-Obstacle bot(true, 300, 500, 50);
 int loopcount = 0;
-
+Bot bot('P', true, 500, 50, 9, 10, 12, 11, 8, 13, 6, 7, A2, A3);
 void setup()
 {
   Serial.begin(9600);
+  bot.set_mode_debug();
 }
 
 void loop()
 {
-  loopcount += 1;  
-  char mode = '1';
-  if (loopcount > 5)
-  {
-    mode = '2';  
-  }
-
-  if (mode == '1' | mode == '4')
-  {
-    bot._debug = false; 
-  }
-  if (mode == '2' | mode == '3')
-  {
-    bot._debug = true;    
-  }
- 
-  bot.set_debug();
-  bot.print_data();
-  bot.start_moving();
+  bot.print_data();  
+  bot.lets_go();
 }

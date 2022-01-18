@@ -3,7 +3,7 @@
 Radar::Radar(uint8_t trigPin, uint8_t echoPin)
 {
   _trigPin = trigPin;
-  _echoPin = echoPin;
+  _echoPin = echoPin;    
 }
 
 long Radar::microsecondsToCentimeters(long ms)
@@ -17,12 +17,11 @@ void Radar::send_echo()
   delayMicroseconds(5);
   digitalWrite(_trigPin, LOW);
   delayMicroseconds(5);
+  duration = pulseIn(_echoPin, HIGH);  
 }
 
-long Radar::cal_distance()
+void Radar::cal_distance()
 {
-  send_echo();
-  long duration = pulseIn(_echoPin, HIGH);
-  long cm = microsecondsToCentimeters(duration);
-  return cm;
+  send_echo();  
+  dist_to_obj = microsecondsToCentimeters(duration);  
 }
