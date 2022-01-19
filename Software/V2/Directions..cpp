@@ -8,6 +8,12 @@ Directions::Directions(uint8_t motor1, uint8_t motor2, uint8_t motor3, uint8_t m
   _motor4 = motor4;
   _ENABLEpin_1 = ENABLEpin_1;
   _ENABLEpin_2 = ENABLEpin_2;
+  pinMode(_motor1, OUTPUT);
+  pinMode(_motor2, OUTPUT);
+  pinMode(_motor3, OUTPUT);
+  pinMode(_motor4, OUTPUT);
+  pinMode(_ENABLEpin_1, OUTPUT);
+  pinMode(_ENABLEpin_2, OUTPUT);
 }
 
 String Directions::stop_moving(int ms_delay, bool debug)

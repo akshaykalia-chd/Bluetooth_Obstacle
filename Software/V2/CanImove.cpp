@@ -1,50 +1,44 @@
 #include "CanImove.h"
 
-Directions _move(9, 10, 12, 11, 8, 13);
-Radar _radar(6, 7);
-
-CanImove::CanImove(int stop_distance)
+CanImove::CanImove(int stop_distance, uint8_t motor1, uint8_t motor2, uint8_t motor3, uint8_t motor4, uint8_t ENABLEpin_1, uint8_t ENABLEpin_2, uint8_t trigPin, uint8_t echoPin) : Directions(motor1, motor2, motor3, motor4, ENABLEpin_1, ENABLEpin_2), Radar(trigPin, echoPin)
 {
   _stop_distance = stop_distance;
 }
 
-outcome CanImove::can_i_move_forward()
+bool CanImove::can_i_move_forward()
 {
-  long distance = _radar.cal_distance();
-  outcome forward = {false, distance};
-  if (distance > _stop_distance & distance < 1200)
+  cal_distance();
+  if (dist_to_obj > _stop_distance & dist_to_obj < 1150)
   {
-    forward = {true, distance};
+    return true;
   }
-  return forward;
+  return false;
 }
 
-outcome CanImove::can_i_move_left(int ms_delay, bool debug)
+bool CanImove::can_i_move_left(int ms_delay, bool debug)
 {
-  _move.look_left(ms_delay, debug);
-  _move.stop_moving(ms_delay, debug);
-  long distance = _radar.cal_distance();
-  outcome left = {false, distance};
-  _move.look_right(ms_delay, debug);
-  _move.stop_moving(100, debug);
-  if (distance > _stop_distance & distance < 1200)
+  look_left(ms_delay, debug);
+  stop_moving(ms_delay, debug);
+  cal_distance();
+  look_right(ms_delay, debug);
+  stop_moving(100, debug);
+  if (dist_to_obj > _stop_distance & dist_to_obj < 1150)
   {
-    left = {true, distance};
+    return true;
   }
-  return left;
+  return false;
 }
 
-outcome CanImove::can_i_move_right(int ms_delay, bool debug)
+bool CanImove::can_i_move_right(int ms_delay, bool debug)
 {
-  _move.look_right(ms_delay, debug);
-  _move.stop_moving(ms_delay, debug);
-  long distance = _radar.cal_distance();
-  outcome right = {false, distance};
-  _move.look_left(ms_delay, debug);
-  _move.stop_moving(ms_delay, debug);
-  if (distance > _stop_distance & distance < 1200)
+  look_right(ms_delay, debug);
+  stop_moving(ms_delay, debug);
+  cal_distance();
+  look_left(ms_delay, debug);
+  stop_moving(ms_delay, debug);
+  if (dist_to_obj > _stop_distance & dist_to_obj < 1150)
   {
-    right = {true, distance};
+    return true;
   }
-  return right;
+  return false;
 }
