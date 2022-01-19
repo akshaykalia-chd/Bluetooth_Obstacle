@@ -8,7 +8,7 @@ CanImove::CanImove(int stop_distance, uint8_t motor1, uint8_t motor2, uint8_t mo
 bool CanImove::can_i_move_forward()
 {
   cal_distance();
-  if (dist_to_obj > _stop_distance & dist_to_obj < 1200)
+  if (dist_to_obj > _stop_distance & dist_to_obj < 1150)
   {
     return true;
   }
@@ -22,7 +22,7 @@ bool CanImove::can_i_move_left(int ms_delay, bool debug)
   cal_distance();
   look_right(ms_delay, debug);
   stop_moving(100, debug);
-  if (dist_to_obj > _stop_distance & dist_to_obj < 1200)
+  if (dist_to_obj > _stop_distance & dist_to_obj < 1150)
   {
     return true;
   }
@@ -36,7 +36,7 @@ bool CanImove::can_i_move_right(int ms_delay, bool debug)
   cal_distance();
   look_left(ms_delay, debug);
   stop_moving(ms_delay, debug);
-  if (dist_to_obj > _stop_distance & dist_to_obj < 1200)
+  if (dist_to_obj > _stop_distance & dist_to_obj < 1150)
   {
     return true;
   }

@@ -7,7 +7,7 @@ class Bluetooth : public Obstacle
 {
 private:
     bool input_recived;
-    int current_cmd;
+    int last_cmd;
     bool act;
     void read_input();
     void decrement_step_size();

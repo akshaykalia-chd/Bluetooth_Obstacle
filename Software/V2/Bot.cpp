@@ -22,11 +22,11 @@ void Bot::set_mode_debug()
     set_debug();
     if (readmode == '1')
     {
-      _mode = '1';  //Obstacle
+      _mode = "O";  //Obstacle
     }
     else
     {
-      _mode = '4'; //Bluetooh
+      _mode = "B"; //Bluetooh
     }
     return;
   }
@@ -36,11 +36,11 @@ void Bot::set_mode_debug()
     set_debug();
     if (readmode == '2')
     {
-      _mode = '2'; //Bluetooh
+      _mode = "BD"; //Bluetooh
     }
     else
     {
-      _mode = '3'; //Obstacle
+      _mode = "OD"; //Obstacle
     }
     return;
   }
@@ -50,12 +50,12 @@ void Bot::set_mode_debug()
 
 void Bot::lets_go()
 {  
-  if (_mode == '4' | _mode == '2') //Mode 2 Bebug
+  if (_mode == "B" | _mode == "BD") //Mode 2 Bebug
   {
     act_on_cmd(); //Bluetooh Control 
     return;
   }
-  if (_mode == '1' | _mode == '3') //Mode 3 Debug
+  if (_mode == "O" | _mode == "OD") //Mode 3 Debug
   {
     start_moving(); //Auto 
     return;

@@ -26,8 +26,7 @@ Obstacle ::Obstacle(char mode, bool debug, int step_size_look, int stop_distance
 }
 
 void Obstacle ::start_moving()
-{
-  print_data();
+{  
   loop_count += 1;
   canImoveForward = can_i_move_forward();  
   if (loop_count > 10 & !stuck)

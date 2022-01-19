@@ -10,24 +10,22 @@ Bluetooth::Bluetooth(char mode, bool debug, int step_size_look, int stop_distanc
 
 void Bluetooth::act_on_cmd()
 {
-    loop_count += 1;
-    if (loop_count > 100)
-    {
-        loop_count = 0;
-    }
+
+    input_recived = false;
+    act = false;
     read_input();
-    act = (cmd != current_cmd) | input_recived;
     cal_distance();
+    act = (cmd != last_cmd) | input_recived;
 
     if (cmd == 55)
     {
-        current_cmd = cmd;
+        last_cmd = cmd;
         stop_moving(_step_size, _debug);
         last_action = "Stop";
         return;
     }
 
-    if ((dist_to_obj<_stop_distance | dist_to_obj> 1200) & cmd == 49)
+    if ((dist_to_obj<_stop_distance | dist_to_obj> 1150) & cmd == 49)
     {
         stop_moving(_step_size, _debug);
         last_action = "Stop";
@@ -37,11 +35,10 @@ void Bluetooth::act_on_cmd()
     if (cmd == 53) // Enable obstacle mode
     {
         start_moving();
-        last_action = "Call Obstacle Mode";
         return;
     }
 
-    if (cmd == 49 & (dist_to_obj > _stop_distance & dist_to_obj < 1200)) // Forward
+    if (cmd == 49 & (dist_to_obj > _stop_distance & dist_to_obj < 1150)) // Forward
     {
         move_forward(_step_size, _debug);
         last_action = "Move Forward";
@@ -53,7 +50,7 @@ void Bluetooth::act_on_cmd()
         move_backward(_step_size, _debug);
         stop_moving(_step_size, _debug);
         last_action = "Move Backward";
-        current_cmd = cmd;
+        last_cmd = cmd;
         return;
     }
 
@@ -62,7 +59,7 @@ void Bluetooth::act_on_cmd()
         turn_right(_step_size, _debug);
         stop_moving(_step_size, _debug);
         last_action = "Turn Right";
-        current_cmd = cmd;
+        last_cmd = cmd;
         return;
     }
 
@@ -71,7 +68,7 @@ void Bluetooth::act_on_cmd()
         turn_left(_step_size, _debug);
         stop_moving(_step_size, _debug);
         last_action = "Turn Left";
-        current_cmd = cmd;
+        last_cmd = cmd;
         return;
     }
 
@@ -103,9 +100,13 @@ void Bluetooth::read_input()
 {
     if (Serial.available() > 0)
     {
-        current_cmd = cmd;
+        last_cmd = cmd;
         cmd = Serial.read();
         input_recived = true;
+    }
+    while (Serial.available() > 0)
+    {
+        Serial.read();
     }
 }
 
@@ -121,14 +122,14 @@ void Bluetooth::decrement_step_size()
         _step_size = 100;
         eprom_val = 0;
     }
-    current_cmd = cmd;
+    last_cmd = cmd;
 }
 
 void Bluetooth::increment_step_size()
 {
     _step_size = _step_size + 10;
     eprom_val = eprom_val + 1;
-    current_cmd = cmd;
+    last_cmd = cmd;
 }
 
 void Bluetooth::persist_step_size()
@@ -137,12 +138,12 @@ void Bluetooth::persist_step_size()
     {
         EEPROM.write(1, eprom_val);
     }
-    current_cmd = cmd;
+    last_cmd = cmd;
 }
 
 void Bluetooth::reset_step_size()
 {
     _step_size = 100;
     eprom_val = 0;
-    current_cmd = cmd;
+    last_cmd = cmd;
 }

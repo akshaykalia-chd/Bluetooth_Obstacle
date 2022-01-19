@@ -18,7 +18,7 @@ private:
 public:
     int cmd;
     int eprom_val;
-    char _mode;
+    String _mode;
     bool _debug;
     bool stuck;
     int _step_size;
