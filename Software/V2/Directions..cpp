@@ -84,12 +84,14 @@ String Directions::turn_left(int ms_delay, bool debug)
 String Directions::look_left(int ms_delay, bool debug)
 {
   turn_left(ms_delay, debug);
+  stop_moving(ms_delay, debug);
   return "look_left";
 }
 
 String Directions::look_right(int ms_delay, bool debug)
 {
   turn_right(ms_delay, debug);
+  stop_moving(ms_delay, debug);
   return "look_right";
 }
 
@@ -98,6 +100,8 @@ String Directions::look_back(int ms_delay, bool debug)
   turn_right(ms_delay, debug);
   stop_moving(ms_delay, debug);
   turn_right(ms_delay, debug);
+  stop_moving(ms_delay, debug);
+
   return "look_back";
 }
 
