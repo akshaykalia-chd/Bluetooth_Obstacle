@@ -16,7 +16,7 @@ private:
     void reset_step_size();
 
 public:
-    Bluetooth(char mode, bool debug, int step_size_look, int stop_distance, uint8_t motor1, uint8_t motor2, uint8_t motor3, uint8_t motor4,
+    Bluetooth(String _mode, bool _debug, int _step_size_look, int _stop_distance, uint8_t motor1, uint8_t motor2, uint8_t motor3, uint8_t motor4,
               uint8_t ENABLEpin_1, uint8_t ENABLEpin_2, uint8_t trigPin, uint8_t echoPin);
     void act_on_cmd();
 };
