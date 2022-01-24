@@ -1,6 +1,6 @@
 #include "Bot.h"
 
-Bot::Bot(char mode, bool debug, int step_size_look, int stop_distance,
+Bot::Bot(String mode, bool debug, int step_size_look, int stop_distance,
          uint8_t motor1, uint8_t motor2, uint8_t motor3, uint8_t motor4,
          uint8_t ENABLEpin_1, uint8_t ENABLEpin_2, uint8_t trigPin, uint8_t echoPin, uint8_t dip1,
          uint8_t dip2) : Bluetooth(mode, debug, step_size_look, stop_distance, motor1, motor2, motor3, motor4, ENABLEpin_1, ENABLEpin_2, trigPin, echoPin), ReadDip(dip1, dip2)

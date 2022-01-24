@@ -1,6 +1,6 @@
 #include "Obstacle.h"
 
-Obstacle ::Obstacle(char mode, bool debug, int step_size_look, int stop_distance, uint8_t motor1, uint8_t motor2, uint8_t motor3,
+Obstacle ::Obstacle(String mode, bool debug, int step_size_look, int stop_distance, uint8_t motor1, uint8_t motor2, uint8_t motor3,
                     uint8_t motor4, uint8_t ENABLEpin_1, uint8_t ENABLEpin_2, uint8_t trigPin,
                     uint8_t echoPin) : CanImove(stop_distance, motor1, motor2, motor3, motor4, ENABLEpin_1, ENABLEpin_2, trigPin, echoPin)
 {
