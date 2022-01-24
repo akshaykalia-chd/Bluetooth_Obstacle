@@ -2,31 +2,20 @@
 #define OBSTACLE_H
 #include <Arduino.h>
 #include <EEPROM.h>
-#include "CanImove.h"
+#include "Stuck.h"
 
-class Obstacle : public CanImove
+
+class Obstacle : public Stuck
 {
-private:
-    bool canImoveForward;
-    bool canImoveLeft;
-    bool canImoveRight;
-    bool am_i_stuck();
-    void un_stuck();
-    int count_call_un_stuck;
+private:   
 
 
 public:
-    int cmd;
-    int eprom_val;
-    String _mode;
-    bool _debug;
-    bool stuck;
-    int _step_size;
-    int _step_size_look;
+    int cmd;    
+    String mode;       
     int loop_count;
     int turns;
-    int look_backs;
-    int move_forwards;    
+    int look_backs;      
     String last_action;
     String motor_state;
     Obstacle(String mode, bool debug, int step_size_look, int stop_distance, uint8_t motor1, uint8_t motor2, uint8_t motor3, uint8_t motor4, uint8_t ENABLEpin_1,

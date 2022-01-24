@@ -29,7 +29,7 @@ bool ReadDip::bool_map(int dip1_val, int dip2_val)
     }
 }
 
-char ReadDip::mode()
+char ReadDip::dip_mode()
 {
     bool_map(analogRead(_dip1), analogRead(_dip2));
     if (_dip1_val & _dip2_val)

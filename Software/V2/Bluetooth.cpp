@@ -1,8 +1,9 @@
 #include "Bluetooth.h"
 
-Bluetooth::Bluetooth(String mode, bool debug, int step_size_look, int stop_distance, uint8_t motor1,
+
+Bluetooth::Bluetooth(String _mode, bool _debug, int _step_size_look, int _stop_distance, uint8_t motor1,
                      uint8_t motor2, uint8_t motor3, uint8_t motor4, uint8_t ENABLEpin_1, uint8_t ENABLEpin_2, uint8_t trigPin,
-                     uint8_t echoPin) : Obstacle(mode, debug, step_size_look, stop_distance, motor1, motor2, motor3, motor4, ENABLEpin_1, ENABLEpin_2, trigPin, echoPin)
+                     uint8_t echoPin) : Obstacle(_mode, _debug, _step_size_look, _stop_distance, motor1, motor2, motor3, motor4, ENABLEpin_1, ENABLEpin_2, trigPin, echoPin)
 {
   input_recived = false;
   act = false;
@@ -20,14 +21,14 @@ void Bluetooth::act_on_cmd()
   if (cmd == 55)
   {
     last_cmd = cmd;
-    stop_moving(_step_size, _debug);
+    stop_moving(step_size, debug);
     last_action = "Stop";
     return;
   }
 
-  if ((dist_to_obj < _stop_distance | dist_to_obj > 1150) & cmd == 49)
+  if ((dist_to_obj < stop_distance | dist_to_obj > 1150) & cmd == 49)
   {
-    stop_moving(_step_size, _debug);
+    stop_moving(step_size, debug);
     last_action = "Stop";
     return;
   }
@@ -38,17 +39,17 @@ void Bluetooth::act_on_cmd()
     return;
   }
 
-  if (cmd == 49 & (dist_to_obj > _stop_distance & dist_to_obj < 1150)) // Forward
+  if (cmd == 49 & (dist_to_obj > stop_distance & dist_to_obj < 1150)) // Forward
   {
-    move_forward(_step_size, _debug);
+    move_forward(step_size, debug);
     last_action = "Move Forward";
     return;
   }
 
   if (cmd == 50 & act) // Backward
   {
-    move_backward(_step_size, _debug);
-    stop_moving(_step_size, _debug);
+    move_backward(step_size, debug);
+    stop_moving(step_size, debug);
     last_action = "Move Backward";
     last_cmd = cmd;
     return;
@@ -56,8 +57,8 @@ void Bluetooth::act_on_cmd()
 
   if (cmd == 52 & act) //Right
   {
-    turn_right(_step_size, _debug);
-    stop_moving(_step_size, _debug);
+    turn_right(step_size, debug);
+    stop_moving(step_size, debug);
     last_action = "Turn Right";
     last_cmd = cmd;
     return;
@@ -65,8 +66,8 @@ void Bluetooth::act_on_cmd()
 
   if (cmd == 51 & act) //Left
   {
-    turn_left(_step_size, _debug);
-    stop_moving(_step_size, _debug);
+    turn_left(step_size, debug);
+    stop_moving(step_size, debug);
     last_action = "Turn Left";
     last_cmd = cmd;
     return;
@@ -100,22 +101,22 @@ void Bluetooth::act_on_cmd()
   }
   if (cmd == 65 & act) //Look Back
   {
-    look_back(_step_size_look,_debug);
-    stop_moving(_step_size_look, _debug);
+    look_back(step_size_look,debug);
+    stop_moving(step_size_look, debug);
     last_action = "Look Back";
     last_cmd = cmd;
   }
   if (cmd == 82 & act) //Look Right 
   {
-    look_right(_step_size_look,_debug);
-     stop_moving(_step_size_look, _debug);
+    look_right(step_size_look,debug);
+     stop_moving(step_size_look, debug);
     last_action = "Look Right";
     last_cmd = cmd;
   }
   if (cmd == 76 & act) //Look Left 
   {
-    look_left(_step_size_look,_debug);
-    stop_moving(_step_size_look, _debug);
+    look_left(step_size_look,debug);
+    stop_moving(step_size_look, debug);
     last_action = "Look Left";
     last_cmd = cmd;
   }
@@ -138,14 +139,14 @@ void Bluetooth::read_input()
 
 void Bluetooth::decrement_step_size()
 {
-  if (_step_size > 100)
+  if (step_size > 100)
   {
-    _step_size = _step_size - 10;
+    step_size = step_size - 10;
     eprom_val = eprom_val - 1;
   }
   else
   {
-    _step_size = 100;
+    step_size = 100;
     eprom_val = 0;
   }
   last_cmd = cmd;
@@ -153,7 +154,7 @@ void Bluetooth::decrement_step_size()
 
 void Bluetooth::increment_step_size()
 {
-  _step_size = _step_size + 10;
+  step_size = step_size + 10;
   eprom_val = eprom_val + 1;
   last_cmd = cmd;
 }
@@ -169,7 +170,7 @@ void Bluetooth::persist_step_size()
 
 void Bluetooth::reset_step_size()
 {
-  _step_size = 100;
+  step_size = 100;
   eprom_val = 0;
   last_cmd = cmd;
 }

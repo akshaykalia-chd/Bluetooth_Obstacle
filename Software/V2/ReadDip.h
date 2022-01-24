@@ -12,7 +12,7 @@ private:
 
 public:
   ReadDip(uint8_t dip1, uint8_t dip2);
-  char mode();
+  char dip_mode();
 };
 
 #endif
